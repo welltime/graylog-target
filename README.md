@@ -1,13 +1,13 @@
 Installation
 ------------
 ```
-php composer.phar require "welltime/graylog" "*"
+php composer.phar require "welltime/graylog-target" "*"
 ```
 
 or add
 
 ```json
-"welltime/graylog" : "*"
+"welltime/graylog-target" : "*"
 ```
 
 Usage
