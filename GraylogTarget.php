@@ -88,10 +88,10 @@ class GraylogTarget extends Target
             $message->setCategory($category);
         }
         if ($this->addLoggerId) {
-            $message->setLoggerId($file);
+            $message->setLoggerId();
         }
         if ($this->addUserId) {
-            $message->setUserId($file);
+            $message->setUserId();
         }
         if ($this->addFile) {
             $message->setFile($file);
