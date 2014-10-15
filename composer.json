@@ -1,0 +1,15 @@
+{
+    "name": "welltime/graylog-target",
+    "type": "yii2-extension",
+    "description": "Graylog2 log target for Yii2",
+    "keywords": ["yii2", "extension", "log", "log target", "graylog", "graylog2", "gelf"],
+    "require": {
+        "yiisoft/yii2": "*",
+        "graylog2/gelf-php": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "welltime\\graylog\\": ""
+        }
+    }
+}
