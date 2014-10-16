@@ -78,11 +78,12 @@ class GraylogTarget extends Target
 
         list($timeStamp, $level, $category, $file) = $this->parseYiiMessageBase($yiiMessage);
 
-        $message
-            ->setSource($this->source)
-            ->setTimestamp($timeStamp)
-            ->setLevel($level)
-        ;
+        if (!$message->getTimestamp()) {
+            $message->setTimestamp($timeStamp);
+        }
+
+        $message->setSource($this->source);
+        $message->setLevel($level);
 
         if ($this->addCategory) {
             $message->setCategory($category);
