@@ -31,6 +31,8 @@ class GraylogTarget extends Target
 
     public $addFile = true;
 
+    public $addFileTrace = true;
+
     private $_levels = [
         Logger::LEVEL_TRACE => LogLevel::DEBUG,
         Logger::LEVEL_PROFILE_BEGIN => LogLevel::DEBUG,
@@ -106,16 +108,33 @@ class GraylogTarget extends Target
         $timeStamp = $yiiMessage[3];
         $level = ArrayHelper::getValue($this->_levels, $yiiMessage[1], LogLevel::INFO);
         $category = $yiiMessage[2];
+        $file = null;
 
         if (isset($yiiMessage[4][0]['file'])) {
-            $file = $yiiMessage[4][0]['file'] . ($yiiMessage[4][0]['line'] ? ' [' . $yiiMessage[4][0]['line'] . ']' : '');
-        } else {
-            $file = null;
+            if ($this->addFileTrace) {
+                $file = implode(PHP_EOL, $this->getFileTraceHierarchy($yiiMessage[4]));
+            } else {
+                $file = $this->formatFileLine($yiiMessage[4][0]);
+            }
         }
 
-
-
         return [$timeStamp, $level, $category, $file];
+    }
+
+    private function getFileTraceHierarchy(array $lines)
+    {
+        $trace = [];
+        foreach ($lines as $line) {
+            if (isset($line['file'])) {
+                $trace[] = $this->formatFileLine($line);
+            }
+        }
+        return $trace;
+    }
+
+    private function formatFileLine($line)
+    {
+        return $line['file'] . ($line['line'] ? ' [' . $line['line'] . ']' : '');
     }
 
     private function parseYiiMessageExt(array $yiiMessage)
@@ -129,5 +148,4 @@ class GraylogTarget extends Target
         }
         return [$shortMessage, $fullMessage];
     }
-
 }

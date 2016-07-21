@@ -32,6 +32,7 @@ return [
                     'addUserId' => true,
                     'addLoggerId' => true,                    
                     'addFile' => true,                    
+                    'addFileTrace' => true,                    
                 ],
             ],
         ],
